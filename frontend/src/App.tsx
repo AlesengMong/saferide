@@ -4,6 +4,7 @@ import type { FormEvent } from "react";
 import "./index.css";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
+import DriverRegistration from "./pages/DriverRegistration";
 
 type Screen = "home" | "signup" | "login" | "ride" | "driver";
 
@@ -30,13 +31,6 @@ function App() {
     event.preventDefault();
     setMessage(
       `Ride request prepared: ${pickup} to ${destination}. Booking will be connected next.`
-    );
-  }
-
-  function handleDriver(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setMessage(
-      "Driver application form completed. Driver verification will be connected next."
     );
   }
 
@@ -97,7 +91,9 @@ function App() {
         return (
           <>
             <h2>Request a ride</h2>
-            <p>Where would you like your journey to begin and end?</p>
+            <p>
+              Where would you like your journey to begin and end?
+            </p>
 
             <form onSubmit={handleRide} className="app-form">
               <label htmlFor="pickup">Pickup location</label>
@@ -127,42 +123,9 @@ function App() {
 
       case "driver":
         return (
-          <>
-            <h2>Become a SafeRide driver</h2>
-            <p>
-              Start your application. Drivers must be reviewed and
-              approved before they can accept rides.
-            </p>
-
-            <form onSubmit={handleDriver} className="app-form">
-              <label htmlFor="driver-name">Full name</label>
-              <input
-                id="driver-name"
-                required
-                placeholder="Enter your full name"
-              />
-
-              <label htmlFor="driver-email">Email address</label>
-              <input
-                id="driver-email"
-                type="email"
-                required
-                placeholder="you@example.com"
-              />
-
-              <label htmlFor="driver-phone">Phone number</label>
-              <input
-                id="driver-phone"
-                type="tel"
-                required
-                placeholder="Enter your phone number"
-              />
-
-              <button className="primary-button" type="submit">
-                Submit application
-              </button>
-            </form>
-          </>
+          <DriverRegistration
+            onSuccess={(successMessage) => setMessage(successMessage)}
+          />
         );
 
       default:
